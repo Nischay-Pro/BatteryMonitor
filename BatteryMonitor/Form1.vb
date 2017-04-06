@@ -76,7 +76,7 @@ Public Class Form1
             Dim writecommand As StreamWriter = processman.StandardInput
             Dim appname As String = Application.ProductName
             Dim apploc As String = Application.ExecutablePath
-            writecommand.WriteLine("reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" & " /V """ & appname & """" & " /t REG_SZ /F /D """ & apploc & "-tray""")
+            writecommand.WriteLine("reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" & " /V """ & appname & """" & " /t REG_SZ /F /D """ & apploc & " -tray""")
             writecommand.Close()
             Return True
         Catch ex As Exception

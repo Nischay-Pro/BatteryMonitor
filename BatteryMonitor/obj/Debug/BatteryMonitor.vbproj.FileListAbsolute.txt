@@ -1,0 +1,22 @@
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\bin\Debug\BatteryMonitor.exe.config
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\bin\Debug\BatteryMonitor.exe
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\bin\Debug\BatteryMonitor.pdb
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\bin\Debug\BatteryMonitor.xml
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\obj\Debug\BatteryMonitor.vbprojResolveAssemblyReference.cache
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\obj\Debug\BatteryMonitor.Form1.resources
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\obj\Debug\BatteryMonitor.Resources.resources
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\obj\Debug\BatteryMonitor.vbproj.GenerateResource.Cache
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\obj\Debug\BatteryMonitor.exe
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\obj\Debug\BatteryMonitor.xml
+C:\Users\Nisch\AppData\Local\Temporary Projects\BatteryMonitor\obj\Debug\BatteryMonitor.pdb
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\bin\Debug\BatteryMonitor.exe.config
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\bin\Debug\BatteryMonitor.exe
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\bin\Debug\BatteryMonitor.pdb
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\bin\Debug\BatteryMonitor.xml
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Debug\BatteryMonitor.vbprojResolveAssemblyReference.cache
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Debug\BatteryMonitor.Form1.resources
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Debug\BatteryMonitor.Resources.resources
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Debug\BatteryMonitor.vbproj.GenerateResource.Cache
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Debug\BatteryMonitor.exe
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Debug\BatteryMonitor.xml
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Debug\BatteryMonitor.pdb

@@ -1,0 +1,10 @@
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\bin\Release\BatteryMonitor.exe.config
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\bin\Release\BatteryMonitor.exe
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\bin\Release\BatteryMonitor.pdb
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\bin\Release\BatteryMonitor.xml
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.Form1.resources
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.Resources.resources
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.vbproj.GenerateResource.Cache
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.exe
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.xml
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.pdb

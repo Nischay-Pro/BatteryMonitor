@@ -30,6 +30,7 @@ Public Class Form1
             End If
             If ini.GetKeyValue("General", "Overcharge") = "True" Then
                 CheckBox3.Checked = True
+                Timer4.Start()
             End If
             Return True
         Catch ex As Exception
@@ -104,7 +105,7 @@ Public Class Form1
             Dim power As PowerStatus = SystemInformation.PowerStatus
             Dim percent As Single = power.BatteryLifePercent
             If percent * 100 <= NumericUpDown1.Value Then
-                NotifyIcon1.BalloonTipText = "Battery Level is below threshold of " & NumericUpDown1.Value & ". We suggest you connect your laptop for charging."
+                NotifyIcon1.BalloonTipText = "Battery Level is below threshold of " & NumericUpDown1.Value & "%. We suggest you connect your laptop for charging."
                 NotifyIcon1.BalloonTipTitle = "Battery Monitor"
                 NotifyIcon1.BalloonTipIcon = ToolTipIcon.Warning
                 NotifyIcon1.ShowBalloonTip(5000)
@@ -112,7 +113,7 @@ Public Class Form1
                 Timer2.Stop()
             End If
             If percent * 100 >= NumericUpDown2.Value Then
-                NotifyIcon1.BalloonTipText = "Battery Level is above threshold of " & NumericUpDown2.Value & ". We suggest you disconnect your laptop from charging."
+                NotifyIcon1.BalloonTipText = "Battery Level is above threshold of " & NumericUpDown2.Value & "%. We suggest you disconnect your laptop from charging."
                 NotifyIcon1.BalloonTipTitle = "Battery Monitor"
                 NotifyIcon1.BalloonTipIcon = ToolTipIcon.Warning
                 NotifyIcon1.ShowBalloonTip(5000)
@@ -139,5 +140,52 @@ Public Class Form1
     Private Sub NotifyIcon1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
         Me.Show()
         Me.ShowInTaskbar = True
+    End Sub
+
+    Private Sub NotifyIcon1_MouseClick(sender As Object, e As MouseEventArgs) Handles NotifyIcon1.MouseClick
+        Me.Show()
+        Me.ShowInTaskbar = True
+    End Sub
+
+    Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
+        Dim ini As New IniFile
+        Try
+            ini.Load(My.Application.Info.DirectoryPath & "\settings.ini")
+        Catch ex As Exception
+        End Try
+        If CheckBox3.Checked = True Then
+            ini.SetKeyValue("General", "Overcharge", CheckBox2.Checked)
+            Timer4.Start()
+        End If
+    End Sub
+
+    Private Sub Timer4_Tick(sender As Object, e As EventArgs) Handles Timer4.Tick
+        Dim power As PowerStatus = SystemInformation.PowerStatus
+        Dim percent As Single = power.BatteryLifePercent * 100
+        If percent >= 45 Then
+            NotifyIcon1.BalloonTipText = "Battery Level is fully charged. Disconnect to prevent overcharging."
+            NotifyIcon1.BalloonTipTitle = "Battery Monitor"
+            NotifyIcon1.BalloonTipIcon = ToolTipIcon.Info
+            NotifyIcon1.ShowBalloonTip(5000)
+            Timer5.Start()
+            Timer4.Stop()
+        End If
+    End Sub
+    Private Sub wait(ByVal interval As Integer)
+        Dim sw As New Stopwatch
+        sw.Start()
+        Do While sw.ElapsedMilliseconds < interval
+            Application.DoEvents()
+        Loop
+        sw.Stop()
+    End Sub
+
+    Private Sub Timer5_Tick(sender As Object, e As EventArgs) Handles Timer5.Tick
+        Dim power As PowerStatus = SystemInformation.PowerStatus
+        Dim percent As Single = power.BatteryLifePercent * 100
+        If percent < 45 Then
+            Timer4.Start()
+            Timer5.Stop()
+        End If
     End Sub
 End Class

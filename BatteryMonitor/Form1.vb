@@ -2,6 +2,13 @@
 Imports BatteryMonitor.IniFile
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim argsma As String() = Environment.GetCommandLineArgs
+        For Each Item As String In argsma
+            If Item = "-tray" Then
+                Me.Hide()
+                Me.ShowInTaskbar = False
+            End If
+        Next
         LoadSettings()
     End Sub
 
@@ -69,7 +76,7 @@ Public Class Form1
             Dim writecommand As StreamWriter = processman.StandardInput
             Dim appname As String = Application.ProductName
             Dim apploc As String = Application.ExecutablePath
-            writecommand.WriteLine("reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" & " /V """ & appname & """" & " /t REG_SZ /F /D """ & apploc & """")
+            writecommand.WriteLine("reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" & " /V """ & appname & """" & " /t REG_SZ /F /D """ & apploc & "-tray""")
             writecommand.Close()
             Return True
         Catch ex As Exception

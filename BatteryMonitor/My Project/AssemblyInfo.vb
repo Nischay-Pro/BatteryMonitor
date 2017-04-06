@@ -8,9 +8,9 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("BatteryMonitor")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("Battery Monitor")>
+<Assembly: AssemblyDescription("A tool to monitor your battery usage")>
+<Assembly: AssemblyCompany("Battery Monitor")>
 <Assembly: AssemblyProduct("BatteryMonitor")>
 <Assembly: AssemblyCopyright("Copyright ©  2017")>
 <Assembly: AssemblyTrademark("")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.06.49")>
-<Assembly: AssemblyFileVersion("1.0.06.49")>
+<Assembly: AssemblyVersion("1.0.06.62")>
+<Assembly: AssemblyFileVersion("1.0.06.62")>

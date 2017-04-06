@@ -1,4 +1,5 @@
-﻿Imports BatteryMonitor.IniFile
+﻿Imports System.IO
+Imports BatteryMonitor.IniFile
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadSettings()
@@ -44,10 +45,60 @@ Public Class Form1
             ini.Load(My.Application.Info.DirectoryPath & "\settings.ini")
         Catch ex As Exception
         End Try
+        If CheckBox1.Checked = True Then
+            RegisterApp()
+        Else
+            DegisterApp()
+        End If
         ini.SetKeyValue("General", "Startup", CheckBox1.Checked)
         ini.Save(My.Application.Info.DirectoryPath & "\settings.ini")
     End Sub
-
+    Public Function RegisterApp()
+        Try
+            Dim processman As New Process
+            Dim pathman As String = IO.Path.GetPathRoot(Environment.SystemDirectory)
+            processman.StartInfo = New ProcessStartInfo()
+            processman.StartInfo.FileName = "cmd"
+            processman.StartInfo.RedirectStandardInput = True
+            processman.StartInfo.RedirectStandardOutput = True
+            processman.StartInfo.RedirectStandardError = True
+            processman.StartInfo.CreateNoWindow = True
+            processman.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+            processman.StartInfo.UseShellExecute = False
+            processman.Start()
+            Dim writecommand As StreamWriter = processman.StandardInput
+            Dim appname As String = Application.ProductName
+            Dim apploc As String = Application.ExecutablePath
+            writecommand.WriteLine("reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" & " /V """ & appname & """" & " /t REG_SZ /F /D """ & apploc & """")
+            writecommand.Close()
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+    Public Function DegisterApp()
+        Try
+            Dim processman As New Process
+            Dim pathman As String = Path.GetPathRoot(Environment.SystemDirectory)
+            processman.StartInfo = New ProcessStartInfo()
+            processman.StartInfo.FileName = "cmd"
+            processman.StartInfo.RedirectStandardInput = True
+            processman.StartInfo.RedirectStandardOutput = True
+            processman.StartInfo.RedirectStandardError = True
+            processman.StartInfo.CreateNoWindow = True
+            processman.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+            processman.StartInfo.UseShellExecute = False
+            processman.Start()
+            Dim writecommand As StreamWriter = processman.StandardInput
+            Dim appname As String = Application.ProductName
+            Dim apploc As String = Application.ExecutablePath
+            writecommand.WriteLine("reg delete HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" & " /V """ & appname & """" & " /F")
+            writecommand.Close()
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
         Dim ini As New IniFile
         Try
@@ -153,16 +204,19 @@ Public Class Form1
             ini.Load(My.Application.Info.DirectoryPath & "\settings.ini")
         Catch ex As Exception
         End Try
+        ini.SetKeyValue("General", "Overcharge", CheckBox3.Checked)
         If CheckBox3.Checked = True Then
-            ini.SetKeyValue("General", "Overcharge", CheckBox2.Checked)
             Timer4.Start()
+        Else
+            Timer4.Stop()
         End If
+        ini.Save(My.Application.Info.DirectoryPath & "\settings.ini")
     End Sub
 
     Private Sub Timer4_Tick(sender As Object, e As EventArgs) Handles Timer4.Tick
         Dim power As PowerStatus = SystemInformation.PowerStatus
         Dim percent As Single = power.BatteryLifePercent * 100
-        If percent >= 45 Then
+        If percent >= 100 Then
             NotifyIcon1.BalloonTipText = "Battery Level is fully charged. Disconnect to prevent overcharging."
             NotifyIcon1.BalloonTipTitle = "Battery Monitor"
             NotifyIcon1.BalloonTipIcon = ToolTipIcon.Info
@@ -183,7 +237,7 @@ Public Class Form1
     Private Sub Timer5_Tick(sender As Object, e As EventArgs) Handles Timer5.Tick
         Dim power As PowerStatus = SystemInformation.PowerStatus
         Dim percent As Single = power.BatteryLifePercent * 100
-        If percent < 45 Then
+        If percent < 100 Then
             Timer4.Start()
             Timer5.Stop()
         End If

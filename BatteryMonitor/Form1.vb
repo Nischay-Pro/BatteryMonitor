@@ -15,13 +15,14 @@ Public Class Form1
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim power As PowerStatus = SystemInformation.PowerStatus
         Dim percent As Single = power.BatteryLifePercent
-        Label1.Text = "Percent battery life remaining: " & percent * 100
+        Label1.Text = "Percent Battery Charge remaining: " & percent * 100
         Dim iSpan As TimeSpan = TimeSpan.FromSeconds(power.BatteryLifeRemaining)
-        Label2.Text = "Battery Life Remaining: " & iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
+        Label2.Text = "Battery Charge Remaining: " & iSpan.Hours.ToString.PadLeft(2, "0"c) & ":" &
                         iSpan.Minutes.ToString.PadLeft(2, "0"c) & ":" &
                         iSpan.Seconds.ToString.PadLeft(2, "0"c)
     End Sub
     Private Function LoadSettings()
+        Trace.WriteLine("Loading Settings")
         Dim ini As New IniFile
         Try
             ini.Load(My.Application.Info.DirectoryPath & "\settings.ini")
@@ -47,6 +48,7 @@ Public Class Form1
     End Function
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        Trace.WriteLine("Startup Changed | " & CheckBox1.Checked)
         Dim ini As New IniFile
         Try
             ini.Load(My.Application.Info.DirectoryPath & "\settings.ini")
@@ -78,6 +80,7 @@ Public Class Form1
             Dim apploc As String = Application.ExecutablePath
             writecommand.WriteLine("reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" & " /V """ & appname & """" & " /t REG_SZ /F /D """ & apploc & " -tray""")
             writecommand.Close()
+            Trace.WriteLine("Registered App")
             Return True
         Catch ex As Exception
             Return False
@@ -101,12 +104,14 @@ Public Class Form1
             Dim apploc As String = Application.ExecutablePath
             writecommand.WriteLine("reg delete HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" & " /V """ & appname & """" & " /F")
             writecommand.Close()
+            Trace.WriteLine("De Registered App")
             Return True
         Catch ex As Exception
             Return False
         End Try
     End Function
     Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        Trace.WriteLine("Threshold Changed | " & CheckBox2.Checked)
         Dim ini As New IniFile
         Try
             ini.Load(My.Application.Info.DirectoryPath & "\settings.ini")
@@ -120,8 +125,10 @@ Public Class Form1
         NumericUpDown2.Enabled = CheckBox2.Checked
         If CheckBox2.Checked = False Then
             Timer2.Stop()
+            Timer3.Stop()
         Else
             Timer2.Start()
+            Timer3.Stop()
         End If
     End Sub
 
@@ -156,6 +163,7 @@ Public Class Form1
         NumericUpDown1.Enabled = CheckBox2.Checked
         NumericUpDown2.Enabled = CheckBox2.Checked
         Button2.Enabled = False
+        Trace.WriteLine("Saved Settings")
     End Sub
 
     Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
@@ -163,18 +171,20 @@ Public Class Form1
             Dim power As PowerStatus = SystemInformation.PowerStatus
             Dim percent As Single = power.BatteryLifePercent
             If percent * 100 <= NumericUpDown1.Value Then
-                NotifyIcon1.BalloonTipText = "Battery Level is below threshold of " & NumericUpDown1.Value & "%. We suggest you connect your laptop for charging."
+                NotifyIcon1.BalloonTipText = "Battery Charge Level is below threshold of " & NumericUpDown1.Value & "%. We suggest you connect your laptop for charging."
                 NotifyIcon1.BalloonTipTitle = "Battery Monitor"
                 NotifyIcon1.BalloonTipIcon = ToolTipIcon.Warning
                 NotifyIcon1.ShowBalloonTip(5000)
+                Trace.WriteLine("Reached Below Threshold. Stand By Monitor Started")
                 Timer3.Start()
                 Timer2.Stop()
             End If
             If percent * 100 >= NumericUpDown2.Value Then
-                NotifyIcon1.BalloonTipText = "Battery Level is above threshold of " & NumericUpDown2.Value & "%. We suggest you disconnect your laptop from charging."
+                NotifyIcon1.BalloonTipText = "Battery Charge Level is above threshold of " & NumericUpDown2.Value & "%. We suggest you disconnect your laptop from charging."
                 NotifyIcon1.BalloonTipTitle = "Battery Monitor"
                 NotifyIcon1.BalloonTipIcon = ToolTipIcon.Warning
                 NotifyIcon1.ShowBalloonTip(5000)
+                Trace.WriteLine("Reached Above Threshold. Stand By Monitor Started")
                 Timer3.Start()
                 Timer2.Stop()
             End If
@@ -185,6 +195,7 @@ Public Class Form1
         Dim power As PowerStatus = SystemInformation.PowerStatus
         Dim percent As Single = power.BatteryLifePercent * 100
         If power.BatteryChargeStatus = BatteryChargeStatus.Charging And percent > NumericUpDown1.Value And percent < NumericUpDown2.Value Then
+            Trace.WriteLine("Reached With Threshold Boundary. Active Monitor Started")
             Timer2.Start()
             Timer3.Stop()
         End If
@@ -206,6 +217,7 @@ Public Class Form1
     End Sub
 
     Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
+        Trace.WriteLine("Overcharge Changed | " & CheckBox3.Checked)
         Dim ini As New IniFile
         Try
             ini.Load(My.Application.Info.DirectoryPath & "\settings.ini")
@@ -214,8 +226,10 @@ Public Class Form1
         ini.SetKeyValue("General", "Overcharge", CheckBox3.Checked)
         If CheckBox3.Checked = True Then
             Timer4.Start()
+            Timer5.Stop()
         Else
             Timer4.Stop()
+            Timer5.Stop()
         End If
         ini.Save(My.Application.Info.DirectoryPath & "\settings.ini")
     End Sub
@@ -224,10 +238,11 @@ Public Class Form1
         Dim power As PowerStatus = SystemInformation.PowerStatus
         Dim percent As Single = power.BatteryLifePercent * 100
         If percent >= 100 Then
-            NotifyIcon1.BalloonTipText = "Battery Level is fully charged. Disconnect to prevent overcharging."
+            NotifyIcon1.BalloonTipText = "Battery is fully charged. Disconnect to prevent overcharging."
             NotifyIcon1.BalloonTipTitle = "Battery Monitor"
             NotifyIcon1.BalloonTipIcon = ToolTipIcon.Info
             NotifyIcon1.ShowBalloonTip(5000)
+            Trace.WriteLine("Battery Fully Charged. Overwatch Monitor Stand by Started")
             Timer5.Start()
             Timer4.Stop()
         End If
@@ -244,9 +259,14 @@ Public Class Form1
     Private Sub Timer5_Tick(sender As Object, e As EventArgs) Handles Timer5.Tick
         Dim power As PowerStatus = SystemInformation.PowerStatus
         Dim percent As Single = power.BatteryLifePercent * 100
-        If percent < 100 Then
+        If percent <= 100 Then
+            Trace.WriteLine("Battery Below Fully Charged Limits. Overwatch Monitor Active Started")
             Timer4.Start()
             Timer5.Stop()
         End If
+    End Sub
+
+    Private Sub Timer6_Tick(sender As Object, e As EventArgs)
+
     End Sub
 End Class

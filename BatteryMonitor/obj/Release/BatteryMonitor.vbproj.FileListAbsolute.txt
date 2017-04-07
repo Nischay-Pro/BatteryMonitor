@@ -8,3 +8,4 @@ C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonit
 C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.exe
 C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.xml
 C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.pdb
+C:\Users\Nisch\Documents\Visual Studio 2017\Projects\BatteryMonitor\BatteryMonitor\obj\Release\BatteryMonitor.vbprojResolveAssemblyReference.cache
